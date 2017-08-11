@@ -1,0 +1,72 @@
+<% include ./partials/header %>
+
+
+    <div class="title">
+      <h1>Nightlife Coordination<h1>
+    </div>
+
+
+
+    <div class='container'>
+      <div class="search">
+        <form class="" action="/" method="GET">
+          <input type="text" name="location" value="" placeholder="search location">
+          <input type="submit">
+        </form>
+      </div>
+      <% yelpResults.forEach(function(yelp){ %>
+        <!-- //////////////////////////////// -->
+
+        <div class="box row-4">
+          <h3><%= yelp.name %></h3>
+
+          <a href="<%= yelp.url %>">
+            <img src="<%= yelp.image_url %>" alt="">
+          </a>
+          <p><%= yelp.location.display_address %></p>
+          <p>rating: <%= yelp.rating %></p>
+
+          <% venues.forEach(function(venue){ %>
+            <!-- //////////////////////////////// -->
+
+            <% if(!currentUser){ %>
+    
+            <% } else if(yelp.name === venue.name){ %>
+
+              <% venue.going.forEach(function(name){ %>
+                <!-- //////////////////////////////// -->
+
+                <% if(name.username === currentUser.username ){ %>
+                  <p> You are reserved to go </p>
+
+                <% } %>
+              <% }) %>
+
+            <% } %>
+          <% }) %>
+          <form class="" action="/cancel" method="post">
+            <button type="submit" name="venue" value="<%= yelp.name %>">Not Going</button>
+          </form>
+          <form class="" action="/going" method="post">
+            <button type="submit" name="venue" value="<%= yelp.name %>">Going</button>
+          </form>
+
+
+<!-- leave -->
+
+
+
+            <% venues.forEach(function(venue){ %>
+              <% if(venue.name === yelp.name){ %>
+                <p>People Going: <%= venue.going.length %> </p>
+              <% } %>
+            <% }) %>
+
+
+        </div>
+      <% }) %>
+    </div>
+
+
+
+<% include ./partials/footer %>
