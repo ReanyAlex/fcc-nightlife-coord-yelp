@@ -11,9 +11,15 @@ img{
   height: 100px;
   width: 100px;
 }
- input{
+
+input{
    color: black;
- }
+}
+
+button{
+  color: black;
+}
+
 .title{
   background: MediumVioletRed;
   margin-top: 180px;

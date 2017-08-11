@@ -59,7 +59,6 @@ app.get("/", function(res,req){
     venues = allVenues
   })
 
-  console.log(localStorage.getItem('location'));
 
   searchData = {
     term:'bars',
@@ -76,7 +75,6 @@ app.get("/", function(res,req){
     }
   }
 
-  // console.log('searchData', searchData);
   yelp.accessToken(CLIENTID, CLIENTSECRET).then(response => {
     const client = yelp.client(response.jsonBody.access_token);
 
@@ -114,7 +112,6 @@ app.post('/going', middleware.isLoggedIn, function(req,res) {
         userArray.push(user.username);
       })
       if (!userArray.includes(req.user.username)) {
-        console.log('not found');
         updateGoing = [...venue[0].going, going]
 
         Venues.findOneAndUpdate({name: req.body.venue}, {going: updateGoing}, function(err, updateVenue) {
@@ -140,7 +137,6 @@ app.post('/cancel', middleware.isLoggedIn, function(req,res) {
       })
 
       let arrayIndex = userArray.indexOf(req.user.username)
-      console.log(arrayIndex);
       if (arrayIndex !== -1) {
         venue[0].going.splice(arrayIndex,1);
         Venues.findOneAndUpdate({name: req.body.venue}, {going: venue[0].going}, function(err, updateVenue) {
