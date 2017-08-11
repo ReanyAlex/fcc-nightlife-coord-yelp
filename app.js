@@ -132,9 +132,7 @@ app.post('/going', middleware.isLoggedIn, function(req,res) {
 app.post('/cancel', middleware.isLoggedIn, function(req,res) {
 
   Venues.find({name: req.body.venue},function(err, venue){
-    if (venue.length === 0) {
-      Venues.create(venueData)
-    } else {
+    if (venue.length !== 0) {
       let userArray = []
 
       venue[0].going.forEach(function(user) {
